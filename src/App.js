@@ -1,25 +1,43 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import MosaicSlideshow from './MosaicSlideshow';
+import {MosaicImage} from './helpers/mosaic-styles';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+  const PUBLIC = '../../../';
+  const Slide1 = (
+    <div class="row no-gutters">
+      <div className="col">
+        <MosaicImage className="w-33"
+        src={`${PUBLIC}images/1.JPG`}
+        />
+        <MosaicImage className="w-33"
+        src={`${PUBLIC}images/3.JPG`}
+        />
+        <MosaicImage className="w-33"
+        src={`${PUBLIC}images/4.JPG`}
+        />
+      </div>
+      <MosaicImage className="col" src={`${PUBLIC}images/2.JPG`} />
     </div>
+  );
+
+  const Slide2 = (
+    <div>
+      not showing yet
+    </div>
+  );
+  return (
+    <>
+      <header className="text-center">
+       <h1>Mosaic Slideshow</h1>
+      </header>
+      <section>
+        <MosaicSlideshow>
+          {Slide1}
+          {Slide2}
+        </MosaicSlideshow>
+      </section>
+    </>
   );
 }
 
