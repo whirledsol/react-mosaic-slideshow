@@ -1,27 +1,22 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-export const FadeVariants = ({duration=0.6,stagger=0})=> ({
+export const FadeVariants = {
     visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: stagger,
-            duration: duration
-        }
+        opacity: 1
     },
     hidden: {
-        opacity: 0,
-        transition: {
-            staggerChildren: stagger,
-            duration: duration
-        }
-    },
-});
+        opacity: 0
+    }
+};
 
-export const FadeMosaic = ({stagger=0.2}) => (
+export const FadeMosaic = ({stagger=0.4, duration=0.6, animate='visible', children}) => (
     <motion.div
         initial="hidden"
-        animate="visible"
-        variants={FadeVariants(stagger)}
+        animate={animate}
+        variants={FadeVariants}
+        transition={{staggerChildren: stagger,duration: duration}}
+        style={{height:'100%'}}
+        children={children}
     />
 );

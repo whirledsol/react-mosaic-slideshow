@@ -1,24 +1,19 @@
 import React from 'react';
 import MosaicSlideshow from './MosaicSlideshow';
-import {MosaicImage} from './helpers/mosaic-styles';
-
+import { MosaicRow, MosaicCol, MosaicStack, MosaicImage } from './helpers/mosaic-styles';
+import {FadeVariants} from './helpers/animations';
 function App() {
   const PUBLIC = '../../../';
   const Slide1 = (
-    <div class="row no-gutters">
-      <div className="col">
-        <MosaicImage className="w-33"
-        src={`${PUBLIC}images/1.JPG`}
-        />
-        <MosaicImage className="w-33"
-        src={`${PUBLIC}images/3.JPG`}
-        />
-        <MosaicImage className="w-33"
-        src={`${PUBLIC}images/4.JPG`}
-        />
-      </div>
-      <MosaicImage className="col" src={`${PUBLIC}images/2.JPG`} />
-    </div>
+    <MosaicRow>
+      <MosaicCol>
+        <MosaicStack height="33%" variants={FadeVariants} src={`${PUBLIC}images/1.JPG`} />
+        <MosaicStack height="33%" variants={FadeVariants} src={`${PUBLIC}images/3.JPG`} />
+        <MosaicStack height="34%" variants={FadeVariants} src={`${PUBLIC}images/4.JPG`} />
+      </MosaicCol>
+      <MosaicCol variants={FadeVariants} src={`${PUBLIC}images/2.JPG`}>
+      </MosaicCol>
+    </MosaicRow>
   );
 
   const Slide2 = (
@@ -29,7 +24,7 @@ function App() {
   return (
     <>
       <header className="text-center">
-       <h1>Mosaic Slideshow</h1>
+        <h1>Mosaic Slideshow</h1>
       </header>
       <section>
         <MosaicSlideshow>
