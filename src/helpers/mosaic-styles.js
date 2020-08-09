@@ -5,7 +5,7 @@ import {motion} from 'framer-motion';
 const MosaicBaseStyleProps = (p) => (`
     position: relative;
     
-    ${p.color?`
+    ${p.color? `
         background-color:${p.color};
     `:''}
 
@@ -19,6 +19,7 @@ const MosaicBaseStyleProps = (p) => (`
 
 const MosaicBaseStatic = styled.div(MosaicBaseStyleProps);
 const MosaicBaseMotion = styled(motion.div)(MosaicBaseStyleProps);
+
 const MosaicBase = (props)=>{
     const MosaicBaseElement = props.variants ? MosaicBaseMotion: MosaicBaseStatic;
     return(
