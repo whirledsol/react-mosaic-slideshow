@@ -1,7 +1,7 @@
 # React Mosaic Slideshow
 
 ## Overview
-This was built for the need to show a good ol'-fasioned javascript slideshow in React. It allows for control using a YouTubesque playbar. Animation and content are controlled by the application so the slides can be greatly customizable.
+This was built for the need to show a good ol'-fashioned javascript slideshow in React. It allows for control using a YouTubesque playbar. Animation and content are controlled by the implementing application so the slides can be greatly customizable.
 
 ## Dependencies
 - chromatism
