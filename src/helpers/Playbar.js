@@ -30,11 +30,11 @@ const PlaybarSlider = styled(motion.div)`
 
 const Playbar = (props)=>{
     const {
-        onTap,
-        height=10,
-        position='top',
-        x=0,
-        color='#ffffff'
+        onTap, //onTap for updates
+        height=10, //base height, hover is 3*height
+        position='top', //locaiton of the playbar relative to parent
+        x=0, //the x position
+        color='#ffffff' //base color, alpha added
     } = props
 
     return (<PlaybarContainer

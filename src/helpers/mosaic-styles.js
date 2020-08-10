@@ -20,6 +20,7 @@ const MosaicBaseStyleProps = (p) => (`
 const MosaicBaseStatic = styled.div(MosaicBaseStyleProps);
 const MosaicBaseMotion = styled(motion.div)(MosaicBaseStyleProps);
 
+//a mosaic element which accepts an image (src), color (color), and animation (variants)
 const MosaicBase = (props)=>{
     const MosaicBaseElement = props.variants ? MosaicBaseMotion: MosaicBaseStatic;
     return(
@@ -27,6 +28,7 @@ const MosaicBase = (props)=>{
     );
 }
 
+//like bootstrap 'row'
 export const MosaicRow = styled(MosaicBase)`
     width:100%;
     height:100%;
@@ -36,20 +38,21 @@ export const MosaicRow = styled(MosaicBase)`
     flex-wrap: wrap;
 `;
 
+//like bootstrap 'col' but allows className='col-*-*'
 export const MosaicCol = styled(MosaicBase)`
     height:100%;
+    padding-left:0;
+    padding-right:0;
+    ${p=>!(p.className??'').startsWith('col') ? `
     -ms-flex-preferred-size: 0;
     flex-basis: 0;
     -ms-flex-positive: 1;
     flex-grow: 1;
     max-width: 100%;
-    ${p=> p.width > 0 && `
-        -ms-flex: 0 0 ${p.width/12}%;
-        flex: 0 0 ${p.width/12}%;
-        max-width: ${p.width/12}%;
-    `}
+    `:''}
 `;
 
+//Allows us to stack vertically, like rowspan
 export const MosaicStack = styled(MosaicBase)`
     ${p=>p.height && `height:${p.height};` }
 `;
