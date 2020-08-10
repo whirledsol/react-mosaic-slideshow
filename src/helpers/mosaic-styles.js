@@ -4,7 +4,10 @@ import {motion} from 'framer-motion';
 
 const MosaicBaseStyleProps = (p) => (`
     position: relative;
-    
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction:column;
+
     ${p.color? `
         background-color:${p.color};
     `:''}
@@ -32,8 +35,7 @@ const MosaicBase = (props)=>{
 export const MosaicRow = styled(MosaicBase)`
     width:100%;
     height:100%;
-    display: -ms-flexbox;
-    display: flex;
+    flex-direction:row;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
 `;
