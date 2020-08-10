@@ -1,8 +1,8 @@
 import React from 'react';
-import Slideshow from './Slideshow';
-import { MosaicRow, MosaicCol, MosaicStack } from './helpers/mosaic-styles';
-import { Slide } from './helpers/slideshow-styles';
-import { FadeMosaic, FadeMosaicVariants } from './helpers/animations';
+import Slideshow from './components/Slideshow';
+import { MosaicRow, MosaicCol, MosaicStack } from './components/helpers/mosaics';
+import { Slide } from './components/helpers/slideshows';
+import { FadeMosaic, FadeMosaicVariants } from './components/helpers/animations';
 import styled from 'styled-components';
 
 const Header = styled.header`
@@ -28,7 +28,7 @@ const MosaicFont = styled.div`
 `;
 
 function App() {
-  const PUBLIC = '../../../';
+  const PUBLIC = process.env.PUBLIC_URL;
   const Slide1 = (
     <Slide key='slide1'>
       <FadeMosaic >
@@ -64,36 +64,57 @@ function App() {
     <Slide key='slide3'>
       <FadeMosaic >
         <MosaicRow>
-          <MosaicCol className='col-6 col-md-8' variants={FadeMosaicVariants} src={`${PUBLIC}images/9.jpg`} />
+
+          <MosaicCol
+            className='col-6 col-md-8'
+            variants={FadeMosaicVariants}
+            src={`${PUBLIC}images/9.jpg`} />
+
           <MosaicCol className='col-3 col-md-2'>
-            <MosaicStack height="50%" variants={FadeMosaicVariants} color="#A9E2F3" className='align-items-center justify-content-center'>
+            <MosaicStack
+              height="50%"
+              variants={FadeMosaicVariants}
+              color="#A9E2F3"
+              className='d-flex align-items-center justify-content-center'>
               <MosaicFont>Flowers</MosaicFont>
             </MosaicStack>
-            <MosaicStack height="50%" variants={FadeMosaicVariants} src={`${PUBLIC}images/11.jpg`} />
+            <MosaicStack
+              height="50%"
+              variants={FadeMosaicVariants}
+              src={`${PUBLIC}images/11.jpg`} />
           </MosaicCol>
+
           <MosaicCol className='col-3 col-md-2'>
-            <MosaicStack height="50%" variants={FadeMosaicVariants} src={`${PUBLIC}images/10.jpg`} />
-            <MosaicStack height="50%" variants={FadeMosaicVariants} color="#A9E2F3" className='align-items-center justify-content-center'>
+            <MosaicStack
+              height="50%"
+              variants={FadeMosaicVariants}
+              src={`${PUBLIC}images/10.jpg`} />
+            <MosaicStack
+              height="50%"
+              variants={FadeMosaicVariants}
+              color="#A9E2F3"
+              className='d-flex align-items-center justify-content-center'>
               <MosaicFont>are pretty.</MosaicFont>
             </MosaicStack>
           </MosaicCol>
+
         </MosaicRow>
       </FadeMosaic>
     </Slide>
   );
   return (
     <>
-      <Header>Mosaic Slideshow</Header>
+      <Header>React Mosaic Slideshow</Header>
       <section>
-        <Slideshow autoplayRestartDelay={0}>
+        <Slideshow>
           {Slide1}
           {Slide2}
           {Slide3}
         </Slideshow>
       </section>
       <Footer>
-        &copy;2020
-        <a href="https://twitter.com/intent/tweet?text=%40whirledsol%20%23reactmosaicslideshow%20Hey%2C" data-size="large">@whirledsol</a>
+        &copy;2020&nbsp;
+        <a target='_blank' href="https://twitter.com/intent/tweet?text=%40whirledsol%20%23reactmosaicslideshow%20Hey%2C" data-size="large">@whirledsol</a>
       </Footer>
     </>
   );

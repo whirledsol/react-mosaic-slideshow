@@ -1,7 +1,20 @@
 {
   "name": "react-mosaic-slideshow",
+  "description": "a basic slideshow component which allows for playback and mosaic designs",
+  "keywords": [
+    "mosaic",
+    "tile",
+    "gallary",
+    "slideshow",
+    "react"
+  ],
+  "author": {
+    "name": "whirledsol",
+    "email": "astro491@gmail.com",
+    "url": "http://willrhod.es"
+  },
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "react": "16.13.1",
     "react-dom": "16.13.1",
@@ -14,7 +27,13 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "publish:npm": "rm -rf dist && mkdir dist &&  babel ./src/components -d dist --copy-files"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-react"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -30,5 +49,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/preset-react": "^7.10.4"
   }
 }

@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import Playbar from './helpers/Playbar';
-import {SlideshowWrapper} from './helpers/slideshow-styles';
+import {SlideshowWrapper} from './helpers/slideshows';
 import useViewportWidth from './helpers/useViewportWidth';
 import {useMotionValue} from 'framer-motion';
 
@@ -55,7 +55,7 @@ const Slideshow = (props) =>{
             let position = playbarX.get() + viewportWidth;
             let newIdx = getChildIndex(position,slideLength);
           
-            if(firstLoad && idx!=newIdx){setFirstLoad(false);}
+            if(firstLoad && idx!==newIdx){setFirstLoad(false);}
             setIdx(newIdx);
           
         });

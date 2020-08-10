@@ -1,5 +1,5 @@
-import React,{useState} from 'react';
-import {motion,useMotionValue} from 'framer-motion';
+import React from 'react';
+import {motion} from 'framer-motion';
 import styled from 'styled-components';
 import {rgba} from './colors';
 
