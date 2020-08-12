@@ -39,13 +39,17 @@ export const MosaicCol = styled(MosaicBase)`
     height:100%;
     padding-left:0;
     padding-right:0;
-    ${p => !(p.className ?? '').startsWith('col') ? `
+    ${p => {
+  var _p$className;
+
+  return !((_p$className = p.className) !== null && _p$className !== void 0 ? _p$className : '').startsWith('col') ? `
     -ms-flex-preferred-size: 0;
     flex-basis: 0;
     -ms-flex-positive: 1;
     flex-grow: 1;
     max-width: 100%;
-    ` : ''}
+    ` : '';
+}}
 `; //Allows us to stack vertically, like rowspan
 
 export const MosaicStack = styled(MosaicBase)`

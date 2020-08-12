@@ -15,6 +15,8 @@ export const FadeMosaicVariants = {
   }
 };
 export const FadeMosaic = props => {
+  var _props$animate;
+
   return /*#__PURE__*/React.createElement(motion.div, _extends({
     initial: "hidden",
     variants: FadeMosaicVariants,
@@ -22,6 +24,6 @@ export const FadeMosaic = props => {
       height: '100%'
     } //required for content to match slideshow
     ,
-    animate: props.animate ?? 'visible'
+    animate: (_props$animate = props.animate) !== null && _props$animate !== void 0 ? _props$animate : 'visible'
   }, props));
 };
