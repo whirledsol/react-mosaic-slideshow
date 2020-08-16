@@ -1,12 +1,12 @@
 import React,{useState,useEffect} from 'react';
 import Playbar from './helpers/Playbar';
-import {SlideshowWrapper} from './helpers/slideshows';
+import {SlideshowWrapper,SlideWrapper} from './helpers/slideshows';
 import useViewportWidth from './helpers/useViewportWidth';
 import {useMotionValue} from 'framer-motion';
-
+import { AnimationWrapper } from './helpers/animations';
 
 const getChildIndex = (position,slideLength) =>{
-    return Math.floor(position/slideLength);
+    return Math.floor((position-1)/slideLength);
 };
 
 const Slideshow = (props) =>{
@@ -19,8 +19,12 @@ const Slideshow = (props) =>{
         autoplayRestartDelay=5*1000, //the delay when tapped to restart autoplay, 0 to disable
         playbarHeight=7, //the height of the playbar in px
         playbarPosition='top', //the position of the playbar (e.g. top, bottom),
-        playbarColor='#ffffff' //the color of the playbar without alpha
+        playbarColor='#ffffff', //the color of the playbar without alpha
+        animation=AnimationWrapper //animation wrapper
     } = props;
+
+    //create component from props
+    const Animation = animation;
 
     //number of slides
     const slideCount = children.length;
@@ -32,10 +36,7 @@ const Slideshow = (props) =>{
     const [autoplayQueued,setAutoplayQueued]= useState(0);
     
     //the position in the slideshow
-    const [idx,setIdx] = useState(0);
-
-    //prevents loading of last slide initially
-    const [firstLoad,setFirstLoad] = useState(true);
+    const [idx,setIdx] = useState({current:0,last:-1});
     
     //viewport hook, will change but needs to alert the effects
     const viewportWidth = useViewportWidth();
@@ -53,16 +54,16 @@ const Slideshow = (props) =>{
     useEffect(_=>{
         const unsubscribeX = playbarX.onChange(_=>{
             let position = playbarX.get() + viewportWidth;
-            let newIdx = getChildIndex(position,slideLength);
-          
-            if(firstLoad && idx!==newIdx){setFirstLoad(false);}
-            setIdx(newIdx);
-          
+            const current = getChildIndex(position,slideLength);
+            if(current !== idx.current){
+                let newIdx = {current:current,last:idx.current}
+                setIdx(newIdx);
+            }
         });
         return () => {
             unsubscribeX();
         }
-    },[viewportWidth]);
+    },[viewportWidth,idx]);
 
     //Autoplay Interval
     useEffect(_=>{
@@ -103,10 +104,16 @@ const Slideshow = (props) =>{
                 color={playbarColor}
             />
             }
-            {!firstLoad && 
-                children[(idx-1+slideCount)%slideCount]
+            {idx.last >= 0 && 
+                <SlideWrapper index={0}>
+                    {children[idx.last]}
+                </SlideWrapper>
             }
-            {children[idx]}
+            <SlideWrapper index={50}>
+                <Animation key={`${idx.current}_${idx.last}`}>
+                    {children[idx.current]}
+                </Animation>
+            </SlideWrapper>
         </SlideshowWrapper>
     );
 }

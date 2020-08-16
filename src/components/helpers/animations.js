@@ -3,21 +3,21 @@ import { motion } from 'framer-motion';
 
 export const FadeMosaicVariants = {
     visible: {
-        opacity: 1,
-        transition:{staggerChildren: 0.3,duration: 0.6}
+        opacity: 1
     },
     hidden: {
-        opacity: 0
+        opacity: 0,
     }
 };
 
-export const FadeMosaic = (props) => {
+export const AnimationWrapper = (props) => {
     return(
     <motion.div
-        initial="hidden"
-        variants={FadeMosaicVariants}
+        initial={props.initial ?? "hidden"}
         style={{height:'100%'}} //required for content to match slideshow
         animate={props.animate ?? 'visible'}
+        variants={FadeMosaicVariants} //shouldn't have to do this but I believe framer-motion has a bug which ignores transition at this level
+        transition={{duration:0.7,staggerChildren: 0.4}}
         {...props}
     />);
 };

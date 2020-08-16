@@ -2,8 +2,9 @@ import React from 'react';
 import Slideshow from './components/Slideshow';
 import { MosaicRow, MosaicCol, MosaicStack } from './components/helpers/mosaics';
 import { Slide } from './components/helpers/slideshows';
-import { FadeMosaic, FadeMosaicVariants } from './components/helpers/animations';
+import { FadeMosaicVariants } from './components/helpers/animations';
 import styled from 'styled-components';
+import {ClipText} from './components/ClipText';
 
 const Header = styled.header`
   font-size:3rem;
@@ -29,25 +30,24 @@ const MosaicFont = styled.div`
 
 function App() {
   const PUBLIC = process.env.PUBLIC_URL;
+
   const Slide1 = (
     <Slide key='slide1'>
-      <FadeMosaic >
         <MosaicRow>
           <MosaicCol>
             <MosaicStack height="33.3%" variants={FadeMosaicVariants} src={`${PUBLIC}images/1.jpg`} />
             <MosaicStack height="33.3%" variants={FadeMosaicVariants} src={`${PUBLIC}images/3.jpg`} />
             <MosaicStack height="33.4%" variants={FadeMosaicVariants} src={`${PUBLIC}images/4.jpg`} />
           </MosaicCol>
-          <MosaicCol variants={FadeMosaicVariants} src={`${PUBLIC}images/2.jpg`}>
+          <MosaicCol variants={FadeMosaicVariants}>
+            <ClipText overlay='rgb(255,255,255,0.8)' background={`${PUBLIC}images/2.jpg`}>Nature</ClipText>
           </MosaicCol>
         </MosaicRow>
-      </FadeMosaic>
     </Slide>
   );
 
   const Slide2 = (
     <Slide key='slide2'>
-      <FadeMosaic >
         <MosaicRow>
           <MosaicCol variants={FadeMosaicVariants} src={`${PUBLIC}images/6.jpg`} />
           <MosaicCol>
@@ -56,15 +56,12 @@ function App() {
             <MosaicStack height="33.4%" variants={FadeMosaicVariants} src={`${PUBLIC}images/8.jpg`} />
           </MosaicCol>
         </MosaicRow>
-      </FadeMosaic>
     </Slide>
   );
 
   const Slide3 = (
     <Slide key='slide3'>
-      <FadeMosaic >
         <MosaicRow>
-
           <MosaicCol
             className='col-6 col-md-8'
             variants={FadeMosaicVariants}
@@ -97,11 +94,11 @@ function App() {
               <MosaicFont>are pretty.</MosaicFont>
             </MosaicStack>
           </MosaicCol>
-
         </MosaicRow>
-      </FadeMosaic>
     </Slide>
   );
+
+  
   return (
     <>
       <Header>React Mosaic Slideshow</Header>
