@@ -16,16 +16,14 @@ I strongly recommend reviewing the sample ```App.js``` which shows three slides.
 ```jsx
     const Slide1 = (
         <Slide key='slide1'> {*wrapper*}
-        <FadeMosaic > {*animation*}
             <MosaicRow> {*row*}
-            <MosaicCol> {*col*}
-                <MosaicStack height={...} variants={...} src={...} /> {*stack*}
+                <MosaicCol> {*col*}
+                    <MosaicStack height={...} variants={...} src={...} /> {*stack*}
+                    ...
+                </MosaicCol>
                 ...
-            </MosaicCol>
-            ...
             </MosaicRow>
             ...
-        </FadeMosaic>
         </Slide>
     );
 ```
@@ -39,6 +37,7 @@ I strongly recommend reviewing the sample ```App.js``` which shows three slides.
         playbarHeight={...}
         playbarPosition={...}
         playbarColor={...}
+        animation={}
     >
         ...
     </Slideshow>

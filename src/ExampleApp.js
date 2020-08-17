@@ -4,7 +4,6 @@ import { MosaicRow, MosaicCol, MosaicStack } from './components/helpers/mosaics'
 import { Slide } from './components/helpers/slideshows';
 import { FadeMosaicVariants } from './components/helpers/animations';
 import styled from 'styled-components';
-import {ClipText} from './components/ClipText';
 
 const Header = styled.header`
   font-size:3rem;
@@ -39,9 +38,7 @@ function App() {
             <MosaicStack height="33.3%" variants={FadeMosaicVariants} src={`${PUBLIC}images/3.jpg`} />
             <MosaicStack height="33.4%" variants={FadeMosaicVariants} src={`${PUBLIC}images/4.jpg`} />
           </MosaicCol>
-          <MosaicCol variants={FadeMosaicVariants}>
-            <ClipText overlay='rgb(255,255,255,0.8)' background={`${PUBLIC}images/2.jpg`}>Nature</ClipText>
-          </MosaicCol>
+          <MosaicCol variants={FadeMosaicVariants} src={`${PUBLIC}images/2.jpg`} />
         </MosaicRow>
     </Slide>
   );
