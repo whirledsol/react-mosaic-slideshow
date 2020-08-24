@@ -7,6 +7,9 @@ const PlaybarBar = styled.div`
     background-color:${p=>rgba(p.color,20)};
     height:${p=>(p.height)}px;
     transition: height 200ms;
+    width:100%;
+    position:absolute;
+    ${p=>p.position}:0;
 `;
 
 const PlaybarContainer = styled(motion.div)`
@@ -41,7 +44,11 @@ const Playbar = (props)=>{
         onTap={onTap}
         position={position}
         height={height}>
-            <PlaybarBar height={height} color={color}>
+            <PlaybarBar
+                height={height}
+                color={color}
+                position={position}
+            >
                 <PlaybarSlider
                     style={{ x }} 
                     color={color}
