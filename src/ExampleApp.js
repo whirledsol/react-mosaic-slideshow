@@ -1,6 +1,6 @@
 import React from 'react';
 import Slideshow from './components/Slideshow';
-import { MosaicRow, MosaicCol, MosaicStack } from './components/helpers/mosaics';
+import { MosaicRow, MosaicCol, MosaicStack,MosaicGridWrapper,MosaicGridItem } from './components/helpers/mosaics';
 import { Slide } from './components/helpers/slideshows';
 import { FadeMosaicVariants } from './components/helpers/animations';
 import styled from 'styled-components';
@@ -32,14 +32,12 @@ function App() {
 
   const Slide1 = (
     <Slide key='slide1'>
-        <MosaicRow>
-          <MosaicCol>
-            <MosaicStack height="33.3%" variants={FadeMosaicVariants} src={`${PUBLIC}images/1.jpg`} />
-            <MosaicStack height="33.3%" variants={FadeMosaicVariants} src={`${PUBLIC}images/3.jpg`} />
-            <MosaicStack height="33.4%" variants={FadeMosaicVariants} src={`${PUBLIC}images/4.jpg`} />
-          </MosaicCol>
-          <MosaicCol variants={FadeMosaicVariants} src={`${PUBLIC}images/2.jpg`} />
-        </MosaicRow>
+        <MosaicGridWrapper rows={3} cols={2} mobileBreakpoint={"md"}>
+            <MosaicGridItem col={1} variants={FadeMosaicVariants} src={`${PUBLIC}images/1.jpg`} />
+            <MosaicGridItem col={1} variants={FadeMosaicVariants} src={`${PUBLIC}images/3.jpg`} />
+            <MosaicGridItem col={1} variants={FadeMosaicVariants} src={`${PUBLIC}images/4.jpg`} />
+            <MosaicGridItem rowspan={3} variants={FadeMosaicVariants} src={`${PUBLIC}images/2.jpg`} />
+        </MosaicGridWrapper>
     </Slide>
   );
 
@@ -100,7 +98,7 @@ function App() {
     <>
       <Header>React Mosaic Slideshow</Header>
       <section>
-        <Slideshow>
+        <Slideshow mobileBreakpoint={'md'} autoplayRestartDelay={0}>
           {Slide1}
           {Slide2}
           {Slide3}

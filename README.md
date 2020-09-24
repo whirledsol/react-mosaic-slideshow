@@ -31,14 +31,24 @@ I strongly recommend reviewing the sample ```App.js``` which shows three slides.
 ### Calling the Slideshow
 ```jsx
     <Slideshow
-        height={...}
-        slideDuration={...}
-        autoplayRestartDelay={...}
-        playbarHeight={...}
-        playbarPosition={...}
-        playbarColor={...}
-        animation={}
+        height={'500px'} //the height of the Slideshow
+        slideDuration={5*1000} //duration of each slide in ms
+        autoplayRestartDelay={5*1000} //the delay when tapped to restart autoplay, 0 to disable
+        playbarHeight={7} //the height of the playbar in px
+        playbarPosition={'top'} //the position of the playbar (e.g. top, bottom),
+        playbarColor={'#ffffff'} //the color of the playbar. If no alpha, 20% will be applied. rgba will override this.
+        mobileBreakpoint={0} //mobile view of 100vh will be applied until the window width hits this breakpoint (px or bs code)
+        animation={AnimationWrapper} //animation wrapper,
     >
-        ...
+        //sequental <Slide>s with animations
     </Slideshow>
 ```
+
+## Changes
+### Log
+|**version**|**Change**|**Breaking changes**|
+|---|---|---|
+|0.2.2|Added ```mobileBreakpoint``` and ```MosaicGrid...```style components.|None|
+
+## Future Support
+- More CSS Grid Support, including IE support with STYLIS

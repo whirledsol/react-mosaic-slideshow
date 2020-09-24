@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {motion} from 'framer-motion';
+import {parseBreakpoint} from './responsive';
 
 const MosaicBaseStyleProps = (p) => (`
     position: relative;
@@ -21,7 +22,7 @@ const MosaicBaseStatic = styled.div(MosaicBaseStyleProps);
 const MosaicBaseMotion = styled(motion.div)(MosaicBaseStyleProps);
 
 //a mosaic element which accepts an image (src), color (color), and animation (variants)
-const MosaicBase = (props)=>{
+export const MosaicBase = (props)=>{
     const MosaicBaseElement = props.variants ? MosaicBaseMotion: MosaicBaseStatic;
     return(
         <MosaicBaseElement {...props} />
@@ -56,3 +57,25 @@ export const MosaicCol = styled(MosaicBase)`
 export const MosaicStack = styled(MosaicBase)`
     ${p=>p.height && `height:${p.height};` }
 `;
+
+
+
+export const MosaicGridItem = styled(MosaicBase)`
+    grid-column: span ${p=>p.colspan || 1};
+    grid-row: span ${p=>p.rowspan || 1};
+    ${p=>p.col  && `grid-column-start: ${p.col };`}
+    ${p=>p.row  && `grid-row-start: ${p=>p.row};`}
+`;
+export const MosaicGridWrapper = styled.div`
+    display: grid;
+    @media (min-width: ${p=>parseBreakpoint(p.mobileBreakpoint)}px) {
+        grid-template-columns: repeat(${p=>p.cols}, 1fr);
+        -ms-grid-columns: (1fr)[${p=>p.cols}];
+        grid-template-rows: repeat(${p=>p.rows}, 1fr);
+    }
+    grid-auto-flow: dense;
+    height:100%;  
+
+   
+`;
+
