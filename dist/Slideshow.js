@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Playbar from './helpers/Playbar';
-import { SlideshowWrapper } from './helpers/slideshows';
+import { SlideshowWrapper, SlideWrapper } from './helpers/slideshows';
 import useViewportWidth from './helpers/useViewportWidth';
 import { useMotionValue } from 'framer-motion';
+import { AnimationWrapper } from './helpers/animations';
+import { parseBreakpoint } from './helpers/responsive';
 
 const getChildIndex = (position, slideLength) => {
-  return Math.floor(position / slideLength);
+  return Math.floor((position - 1) / slideLength);
 };
 
 const Slideshow = props => {
@@ -23,21 +25,35 @@ const Slideshow = props => {
     //the height of the playbar in px
     playbarPosition = 'top',
     //the position of the playbar (e.g. top, bottom),
-    playbarColor = '#ffffff' //the color of the playbar without alpha
+    playbarColor = '#ffffff',
+    //the color of the playbar. If no alpha, 20% will be applied. rgba will override this.
+    mobileBreakpoint = 0,
+    //mobile view of 100vh will be applied until the window width hits this breakpoint (px or bootstrap 4 code)
+    animation = AnimationWrapper //animation wrapper,
 
-  } = props; //number of slides
+  } = props; //mobileBreakpoint resolved
 
-  const slideCount = children.length; //whole buncha variables
+  const mobileBreakpointInt = parseBreakpoint(mobileBreakpoint);
+
+  const calcHeight = w => w > mobileBreakpointInt ? height : '100vh'; //create component from props
+
+
+  const Animation = animation; //number of slides
+
+  const slideCount = children.length; //autoplay flag
 
   const [autoplay, setAutoplay] = useState(true); //the timestamp of the last tap to restart autoplay
 
   const [autoplayQueued, setAutoplayQueued] = useState(0); //the position in the slideshow
 
-  const [idx, setIdx] = useState(0); //prevents loading of last slide initially
+  const [idx, setIdx] = useState({
+    current: 0,
+    last: -1
+  }); //viewport hook, will change but needs to alert the effects
 
-  const [firstLoad, setFirstLoad] = useState(true); //viewport hook, will change but needs to alert the effects
+  const viewportWidth = useViewportWidth(); //in charge of maintaining the responsive height
 
-  const viewportWidth = useViewportWidth(); //the playbar position
+  const [wrapperHeight, setWrapperHeight] = useState(calcHeight()); //the playbar position
 
   const playbarX = useMotionValue(0); //the length on the playbar per slide
 
@@ -48,18 +64,20 @@ const Slideshow = props => {
   useEffect(_ => {
     const unsubscribeX = playbarX.onChange(_ => {
       let position = playbarX.get() + viewportWidth;
-      let newIdx = getChildIndex(position, slideLength);
+      const current = getChildIndex(position, slideLength);
 
-      if (firstLoad && idx !== newIdx) {
-        setFirstLoad(false);
+      if (current !== idx.current) {
+        let newIdx = {
+          current: current,
+          last: idx.current
+        };
+        setIdx(newIdx);
       }
-
-      setIdx(newIdx);
     });
     return () => {
       unsubscribeX();
     };
-  }, [viewportWidth]); //Autoplay Interval
+  }, [viewportWidth, idx]); //Autoplay Interval
 
   useEffect(_ => {
     if (!autoplay) return;
@@ -77,7 +95,22 @@ const Slideshow = props => {
       setAutoplay(true);
     }, autoplayRestartDelay);
     return () => clearTimeout(autoplayRestart);
-  }, [autoplayQueued, viewportWidth]); //Tap Callback
+  }, [autoplayQueued, viewportWidth]);
+  useEffect(_ => {
+    if (autoplay || !autoplayRestartDelay) return;
+    const autoplayRestart = setTimeout(() => {
+      setAutoplay(true);
+    }, autoplayRestartDelay);
+    return () => clearTimeout(autoplayRestart);
+  }, [autoplayQueued, viewportWidth]); //responsive wrapper height when width changes
+
+  useEffect(_ => {
+    const newHeight = calcHeight(viewportWidth);
+
+    if (newHeight !== wrapperHeight) {
+      setWrapperHeight(newHeight);
+    }
+  }, [viewportWidth]); //Tap Callback
 
   const onPlaybarTap = (e, {
     point
@@ -90,14 +123,20 @@ const Slideshow = props => {
   };
 
   return /*#__PURE__*/React.createElement(SlideshowWrapper, {
-    height: height
+    height: wrapperHeight
   }, playbarHeight > 0 && /*#__PURE__*/React.createElement(Playbar, {
     onTap: onPlaybarTap,
     height: playbarHeight,
     position: playbarPosition,
     x: playbarX,
     color: playbarColor
-  }), !firstLoad && children[(idx - 1 + slideCount) % slideCount], children[idx]);
+  }), idx.last >= 0 && /*#__PURE__*/React.createElement(SlideWrapper, {
+    index: 0
+  }, children[idx.last]), /*#__PURE__*/React.createElement(SlideWrapper, {
+    index: 50
+  }, /*#__PURE__*/React.createElement(Animation, {
+    key: `${idx.current}_${idx.last}`
+  }, children[idx.current])));
 };
 
 export default Slideshow;

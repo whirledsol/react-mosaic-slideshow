@@ -13,13 +13,13 @@
     "email": "astro491@gmail.com",
     "url": "http://willrhod.es"
   },
-  "version": "0.1.2",
+  "version": "0.2.3",
   "private": false,
   "dependencies": {
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-scripts": "3.4.1",
-    "framer-motion": "2.3.0",
+    "framer-motion": "2.4.2",
     "styled-components": "5.1.1",
     "chromatism": "3.0.0"
   },
@@ -28,7 +28,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "publish:npm": "rm -rf dist && mkdir dist &&  babel ./src/components -d dist --copy-files && cp package.json dist/package.json && npm publish --prefix ./dist"
+    "publish:npm": "rm -rf dist && mkdir dist &&  babel ./src/components -d dist --copy-files && cp ./package.json dist && npm publish dist"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -37,7 +37,8 @@
     "production": [
       ">0.2%",
       "not dead",
-      "not op_mini all"
+      "not op_mini all",
+      "IE 11"
     ],
     "development": [
       "last 1 chrome version",

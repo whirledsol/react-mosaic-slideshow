@@ -13,7 +13,7 @@
     "email": "astro491@gmail.com",
     "url": "http://willrhod.es"
   },
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": false,
   "dependencies": {
     "react": "16.13.1",
@@ -37,7 +37,8 @@
     "production": [
       ">0.2%",
       "not dead",
-      "not op_mini all"
+      "not op_mini all",
+      "IE 11"
     ],
     "development": [
       "last 1 chrome version",

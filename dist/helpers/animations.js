@@ -4,26 +4,27 @@ import React from 'react';
 import { motion } from 'framer-motion';
 export const FadeMosaicVariants = {
   visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.3,
-      duration: 0.6
-    }
+    opacity: 1
   },
   hidden: {
     opacity: 0
   }
 };
-export const FadeMosaic = props => {
-  var _props$animate;
+export const AnimationWrapper = props => {
+  var _props$initial, _props$animate;
 
   return /*#__PURE__*/React.createElement(motion.div, _extends({
-    initial: "hidden",
-    variants: FadeMosaicVariants,
+    initial: (_props$initial = props.initial) !== null && _props$initial !== void 0 ? _props$initial : "hidden",
     style: {
       height: '100%'
     } //required for content to match slideshow
     ,
-    animate: (_props$animate = props.animate) !== null && _props$animate !== void 0 ? _props$animate : 'visible'
+    animate: (_props$animate = props.animate) !== null && _props$animate !== void 0 ? _props$animate : 'visible',
+    variants: FadeMosaicVariants //shouldn't have to do this but I believe framer-motion has a bug which ignores transition at this level
+    ,
+    transition: {
+      duration: 0.7,
+      staggerChildren: 0.4
+    }
   }, props));
 };

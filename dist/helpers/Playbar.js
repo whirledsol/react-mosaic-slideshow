@@ -6,6 +6,9 @@ const PlaybarBar = styled.div`
     background-color:${p => rgba(p.color, 20)};
     height:${p => p.height}px;
     transition: height 200ms;
+    width:100%;
+    position:absolute;
+    ${p => p.position}:0;
 `;
 const PlaybarContainer = styled(motion.div)`
     position:absolute;
@@ -44,7 +47,8 @@ const Playbar = props => {
     height: height
   }, /*#__PURE__*/React.createElement(PlaybarBar, {
     height: height,
-    color: color
+    color: color,
+    position: position
   }, /*#__PURE__*/React.createElement(PlaybarSlider, {
     style: {
       x
