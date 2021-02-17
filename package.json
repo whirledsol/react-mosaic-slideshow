@@ -13,15 +13,16 @@
     "email": "astro491@gmail.com",
     "url": "http://willrhod.es"
   },
-  "version": "0.2.3",
+  "version": "0.3.0",
   "private": false,
   "dependencies": {
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "react-scripts": "3.4.1",
-    "framer-motion": "2.4.2",
-    "styled-components": "5.1.1",
-    "chromatism": "3.0.0"
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-scripts": "4.0.2",
+    "framer-motion": "3.3.0",
+    "styled-components": "5.2.1",
+    "chromatism": "3.0.0",
+    "react-use": "17.1.1"
   },
   "scripts": {
     "start": "react-scripts start",

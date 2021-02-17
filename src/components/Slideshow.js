@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import Playbar from './helpers/Playbar';
 import {SlideshowWrapper,SlideWrapper} from './helpers/slideshows';
-import useViewportWidth from './helpers/useViewportWidth';
+import {useWindowSize} from 'react-use';
 import {useMotionValue} from 'framer-motion';
 import { AnimationWrapper } from './helpers/animations';
 import { parseBreakpoint } from './helpers/responsive';
@@ -45,8 +45,8 @@ const Slideshow = (props) =>{
     const [idx,setIdx] = useState({current:0,last:-1});
     
     //viewport hook, will change but needs to alert the effects
-    const viewportWidth = useViewportWidth();
-
+    const {width:viewportWidth} = useWindowSize();
+    
     //in charge of maintaining the responsive height
     const [wrapperHeight,setWrapperHeight]= useState(calcHeight());
 
