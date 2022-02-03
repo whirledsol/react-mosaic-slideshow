@@ -21,7 +21,6 @@
     "react-scripts": "5.0.0",
     "framer-motion": "4.1.17",
     "styled-components": "5.3.3",
-
     "chromatism": "3.0.0",
     "react-use": "17.3.2"
   },
