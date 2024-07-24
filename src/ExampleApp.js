@@ -105,7 +105,7 @@ function App() {
         </Slideshow>
       </section>
       <Footer>
-        &copy;2020&nbsp;
+        &copy;2024&nbsp;
         <a target='_blank' href="https://twitter.com/intent/tweet?text=%40whirledsol%20%23reactmosaicslideshow%20Hey%2C" data-size="large">@whirledsol</a>
       </Footer>
     </>
