@@ -5,11 +5,9 @@ import { useWindowSize } from 'react-use';
 import { useMotionValue } from 'framer-motion';
 import { AnimationWrapper } from './helpers/animations';
 import { parseBreakpoint } from './helpers/responsive';
-
 const getChildIndex = (position, slideLength) => {
   return Math.floor((position - 1) / slideLength);
 };
-
 const Slideshow = props => {
   //deconstruct props, remember: animation is controlled by the children
   const {
@@ -30,44 +28,52 @@ const Slideshow = props => {
     mobileBreakpoint = 0,
     //mobile view of 100vh will be applied until the window width hits this breakpoint (px or bootstrap 4 code)
     animation = AnimationWrapper //animation wrapper,
+  } = props;
 
-  } = props; //mobileBreakpoint resolved
-
+  //mobileBreakpoint resolved
   const mobileBreakpointInt = parseBreakpoint(mobileBreakpoint);
+  const calcHeight = w => w > mobileBreakpointInt ? height : '100vh';
 
-  const calcHeight = w => w > mobileBreakpointInt ? height : '100vh'; //create component from props
+  //create component from props
+  const Animation = animation;
 
+  //number of slides
+  const slideCount = children.length;
 
-  const Animation = animation; //number of slides
+  //autoplay flag
+  const [autoplay, setAutoplay] = useState(true);
 
-  const slideCount = children.length; //autoplay flag
+  //the timestamp of the last tap to restart autoplay
+  const [autoplayQueued, setAutoplayQueued] = useState(0);
 
-  const [autoplay, setAutoplay] = useState(true); //the timestamp of the last tap to restart autoplay
-
-  const [autoplayQueued, setAutoplayQueued] = useState(0); //the position in the slideshow
-
+  //the position in the slideshow
   const [idx, setIdx] = useState({
     current: 0,
     last: -1
-  }); //viewport hook, will change but needs to alert the effects
+  });
 
+  //viewport hook, will change but needs to alert the effects
   const {
     width: viewportWidth
-  } = useWindowSize(); //in charge of maintaining the responsive height
+  } = useWindowSize();
 
-  const [wrapperHeight, setWrapperHeight] = useState(calcHeight()); //the playbar position
+  //in charge of maintaining the responsive height
+  const [wrapperHeight, setWrapperHeight] = useState(calcHeight());
 
-  const playbarX = useMotionValue(0); //the length on the playbar per slide
+  //the playbar position
+  const playbarX = useMotionValue(0);
 
-  const slideLength = viewportWidth / slideCount; //the interval delay to give us the slideDuration we need
+  //the length on the playbar per slide
+  const slideLength = viewportWidth / slideCount;
 
-  const intervalSpeed = slideDuration / slideLength; //Playbar Location Change Update
+  //the interval delay to give us the slideDuration we need
+  const intervalSpeed = slideDuration / slideLength;
 
+  //Playbar Location Change Update
   useEffect(_ => {
     const unsubscribeX = playbarX.onChange(_ => {
       let position = playbarX.get() + viewportWidth;
       const current = getChildIndex(position, slideLength);
-
       if (current !== idx.current) {
         let newIdx = {
           current: current,
@@ -79,8 +85,9 @@ const Slideshow = props => {
     return () => {
       unsubscribeX();
     };
-  }, [viewportWidth, idx]); //Autoplay Interval
+  }, [viewportWidth, idx]);
 
+  //Autoplay Interval
   useEffect(_ => {
     if (!autoplay) return;
     const interval = setInterval(() => {
@@ -89,8 +96,9 @@ const Slideshow = props => {
       playbarX.set(value);
     }, intervalSpeed);
     return () => clearInterval(interval);
-  }, [autoplay, viewportWidth]); //Autoplay Restart Interval
+  }, [autoplay, viewportWidth]);
 
+  //Autoplay Restart Interval
   useEffect(_ => {
     if (autoplay || !autoplayRestartDelay) return;
     const autoplayRestart = setTimeout(() => {
@@ -104,26 +112,25 @@ const Slideshow = props => {
       setAutoplay(true);
     }, autoplayRestartDelay);
     return () => clearTimeout(autoplayRestart);
-  }, [autoplayQueued, viewportWidth]); //responsive wrapper height when width changes
+  }, [autoplayQueued, viewportWidth]);
 
+  //responsive wrapper height when width changes
   useEffect(_ => {
     const newHeight = calcHeight(viewportWidth);
-
     if (newHeight !== wrapperHeight) {
       setWrapperHeight(newHeight);
     }
-  }, [viewportWidth]); //Tap Callback
+  }, [viewportWidth]);
 
+  //Tap Callback
   const onPlaybarTap = (e, {
     point
   }) => {
     setAutoplay(false);
     setAutoplayQueued(new Date().getTime()); //set with time so that the effect will hit each time
-
     let position = point.x - viewportWidth;
     playbarX.set(position);
   };
-
   return /*#__PURE__*/React.createElement(SlideshowWrapper, {
     height: wrapperHeight
   }, playbarHeight > 0 && /*#__PURE__*/React.createElement(Playbar, {
@@ -140,5 +147,4 @@ const Slideshow = props => {
     key: `${idx.current}_${idx.last}`
   }, children[idx.current])));
 };
-
 export default Slideshow;

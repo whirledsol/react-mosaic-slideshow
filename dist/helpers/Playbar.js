@@ -27,7 +27,6 @@ const PlaybarSlider = styled(motion.div)`
     transition: height 200ms;
     background-color:${p => rgba(p.color, 75)};
 `;
-
 const Playbar = props => {
   const {
     onTap,
@@ -39,7 +38,6 @@ const Playbar = props => {
     x = 0,
     //the x position
     color = '#ffffff' //base color, alpha added
-
   } = props;
   return /*#__PURE__*/React.createElement(PlaybarContainer, {
     onTap: onTap,
@@ -56,5 +54,4 @@ const Playbar = props => {
     color: color
   })));
 };
-
 export default Playbar;
